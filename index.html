@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input id="generate-result" class="form-control" type="text">
+                    <button class="generate-btn" id="generate-btn">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input class="form-control" type="text" id="cla-display">
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                              <div class="button" id="7" onclick="numbersButtonHandler('7')">7</div>
+                              <div class="button" id="8" onclick="numbersButtonHandler('8')">8</div>
+                              <div class="button" id="9" onclick="numbersButtonHandler('9')">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button" id="4" onclick="numbersButtonHandler('4')">4</div>
+                              <div class="button" id="5" onclick="numbersButtonHandler('5')">5</div>
+                              <div class="button" id="6" onclick="numbersButtonHandler('6')">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button" id="1" onclick="numbersButtonHandler('1')">1</div>
+                              <div class="button" id="2" onclick="numbersButtonHandler('2')">2</div>
+                              <div class="button" id="3" onclick="numbersButtonHandler('3')">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button"><</div>
+                                <div class="button" id="0" onclick="numbersButtonHandler('0')">0</div>
+                                <div id="clear-cal-display" class="button">C</div>
+                            </div>
+                            <div>
+                                <button type="submit" id="matching-submit" class="submit-btn">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section" id="">
+            <p id="pin-did-not-match" class="notify">❌ Pin Didn't Match, Please try again</p>
+            <p id="pin-match" class="notify">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+    </div>
+
+    <script>
+        //Pin Generator Function
+        document.getElementById("generate-btn").addEventListener("click", function(){
+            document.getElementById("generate-result").value = Math.floor((Math.random() * (9999 - 1000)) + 1000);
+        })
+    
+        //Number Button Handler
+        function numbersButtonHandler(id){
+            const displayNumber = document.getElementById(id).innerText;
+                document.getElementById("cla-display").value = document.getElementById("cla-display").value + displayNumber;
+        }
+
+        //Button Display Handler
+        document.getElementById("clear-cal-display").addEventListener("click", function(){
+            document.getElementById("cla-display").value = "";
+        })
+        
+        document.getElementById("matching-submit").addEventListener("click", function(){
+            const generateResult = document.getElementById("generate-result").value;
+            const typingNumber = document.getElementById("cla-display").value;
+            if (generateResult == typingNumber){
+                const pinMatch = document.getElementById("pin-match");
+                pinMatch.style.display = "block";
+                const pinDidNotMatch = document.getElementById("pin-did-not-match");
+                pinDidNotMatch.style.display = "none";
+            }else{
+                const pinDidNotMatch = document.getElementById("pin-did-not-match");
+                pinDidNotMatch.style.display = "block";
+                const pinMatch = document.getElementById("pin-match");
+                pinMatch.style.display = "none";
+            }
+            document.getElementById("cla-display").value = "";
+        })
+
+    </script>
+</body>
+</html>
